@@ -1,11 +1,18 @@
 version: '3.9'
 name: corretto-assessment
 services:
-  app:
-    image: $DOCKER_REPO:latest
+  web-app:
+    image: $DOCKER_REPO
     restart: on-failure
-    ports:
-      - '80:8080'
     environment:
       - PORT=8080
       - DATABASE_URL=$DATABASE_URL
+  web-proxy:
+    image: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web-app
+    restart: on-failure
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
