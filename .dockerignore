@@ -1,3 +1,5 @@
 Dockerfile
 .ebextensions
 .git
+
+target/
